@@ -1,4 +1,4 @@
-# LWIP FREERTOS
+# LWIP FREERTOS STATIC IP
 
 **Prerequisites:**
 - First complete tutorial in `LWIP_BASIC`
