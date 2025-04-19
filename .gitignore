@@ -1,2 +1,7 @@
 /.metadata/
+**/.settings/
+**/.cproject
+**/.mxproject
+**/.project
+
 **/Debug/
