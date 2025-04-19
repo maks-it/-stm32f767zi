@@ -2,3 +2,4 @@
 
 * [LWPI Basic](./LWIP_BASIC/README.md)
 * [LWIP FreeRTOS Basic](./LWIP_FREERTOS/README.md)
+* [LWIP FreeRTOS HTTP Server Basic](./LWIP_FREERTOS_HTTP/README.md)
