@@ -1,6 +1,7 @@
-# LWIP Static IP With FreeRTOS
+# LWIP FREERTOS
 
-First complete steps in `LWIP_BASIC`
+**Prerequisites:**
+- First complete tutorial in `LWIP_BASIC`
 
 ## 1. **Enable FreeRTOS**
 - Go to **Middleware > FREERTOS**
