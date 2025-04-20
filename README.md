@@ -1,11 +1,10 @@
 # STM32 F767ZI Tutorials
 
+![NUCLEO-F767ZI](./resources/NUCLEO-F767ZI.jpg "NUCLEO-F767Z")
+
 **⚠️ Important:**
 
-> These tutorials were created using the NUCLEO-F767ZI evaluation board. Since this board lacks an HSE clock source, all projects are configured to use the ST-LINK clock. This means that Ethernet DHCP functionality is only available during debugging via ST-LINK.
-
-
-![NUCLEO-F767ZI](./resources/NUCLEO-F767ZI.jpg "NUCLEO-F767Z")
+> These tutorials were created using the NUCLEO-F767ZI evaluation board, with the ST-LINK providing the clock signal to the Ethernet PHY.
 
 **Without DHCP:**
 
@@ -16,4 +15,11 @@
 **With DHCP**
 
 * [LWIP FreeRTOS DHCP](./LWIP_FREERTOS_DHCP/README.md)
+
+**✅ Important:**
+
+> These tutorials were created using the NUCLEO-F767ZI evaluation board, configured with a standalone RMII clock for Ethernet functionality.
+
+**With DHCP**
+
 * [LWIP FreeRTOS 1602](./LWIP_FREERTOS_1602/README.md)
