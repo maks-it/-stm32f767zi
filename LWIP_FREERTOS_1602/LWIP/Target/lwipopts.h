@@ -118,6 +118,9 @@
 /*-----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 #define LWIP_NETIF_HOSTNAME 1
+#define DHCP_RETRY_COUNT 5
+#define DHCP_FINE_TIMER_MSECS 500
+#define DHCP_COARSE_TIMER_SECS 60
 /* USER CODE END 1 */
 
 #ifdef __cplusplus
