@@ -26,8 +26,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd1602_i2c.h"
+#include "lcd1602_text.h"
 #include "lwip/netif.h"
 #include "lwip/ip4_addr.h"
+#include "lwip/dhcp.h"
+#include <string.h>
 
 extern I2C_HandleTypeDef hi2c2;
 extern struct netif gnetif;
@@ -138,6 +141,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+    sys_check_timeouts();  // This is critical for DHCP, TCP, and timers to work
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
@@ -156,6 +160,7 @@ void DisplayTask(void const * argument)
   char ip_str[16]; // Buffer to store the IP address as a string
   char prev_ip_str[16] = ""; // Previous IP address
   char prev_hostname[32] = ""; // Previous hostname
+	uint8_t prev_dhcp_state = 0xFF;
   LCD1602_I2C_HandleTypeDef lcd; // LCD handle (initialize it properly before use)
 
   // Initialize the LCD
@@ -176,19 +181,36 @@ void DisplayTask(void const * argument)
     // Get the hostname
     const char *hostname = netif_get_hostname(&gnetif);
 
-    // Check if the IP address or hostname has changed
-    if (strcmp(ip_str, prev_ip_str) != 0 || strcmp(hostname, prev_hostname) != 0)
+    // Get DHCP state
+    const struct dhcp *dhcp = netif_dhcp_data(&gnetif);
+    uint8_t dhcp_state = dhcp ? dhcp->state : 255;
+
+    // Check if the IP address or DHCP state or hostname has changed
+    if (strcmp(ip_str, prev_ip_str) != 0 || dhcp_state != prev_dhcp_state || strcmp(hostname, prev_hostname) != 0)
     {
       // Update the previous values
       strncpy(prev_ip_str, ip_str, sizeof(prev_ip_str));
-      strncpy(prev_hostname, hostname, sizeof(prev_hostname));
+      prev_ip_str[sizeof(prev_ip_str) - 1] = '\0';
 
-      // Clear the LCD and print the hostname and IP address
+      strncpy(prev_hostname, hostname, sizeof(prev_hostname));
+      prev_hostname[sizeof(prev_hostname) - 1] = '\0';
+
+      prev_dhcp_state = dhcp_state;
+
+      // Clear the LCD and print the DHCP state and IP address
       lcd_clear(&lcd);
-      lcd_gotoxy(&lcd, 0, 0); // Move to the first row
-      lcd_puts(&lcd, hostname); // Print hostname
-      lcd_gotoxy(&lcd, 0, 1); // Move to the second row
-      lcd_puts(&lcd, ip_str); // Print IP address
+
+      //lcd_gotoxy(&lcd, 0, 0); // Move to the first row
+      //lcd_puts(&lcd, hostname); // Print hostname
+
+      char tmp[16];
+      snprintf(tmp, sizeof(tmp), "DHCP STATE: %u", dhcp_state);
+      //lcd_puts(&lcd, tmp); // Print DHCP state number
+      lcd_scroll_text(&lcd, tmp, 0, 300);
+      lcd_scroll_text(&lcd, ip_str, 1, 300);
+
+      //lcd_gotoxy(&lcd, 0, 1); // Move to the second row
+      //lcd_puts(&lcd, ip_str); // Print IP address
     }
 
     osDelay(1000); // Check for updates every second

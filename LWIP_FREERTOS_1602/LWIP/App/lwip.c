@@ -81,11 +81,6 @@ void MX_LWIP_Init(void)
 
   /* Set hostname before DHCP ever runs */
   netif_set_hostname(&gnetif, "STM32-F767ZI");
-
-  /* Wait for the link to be up before starting DHCP */
-  while (!netif_is_link_up(&gnetif)) {
-      osDelay(100); // Wait for 100ms
-  }
 /* USER CODE END H7_OS_THREAD_DEF_CREATE_CMSIS_RTOS_V1 */
 
   /* Start DHCP negotiation for a network interface (IPv4) */
