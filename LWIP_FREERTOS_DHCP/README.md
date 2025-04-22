@@ -1,3 +1,0 @@
-# LWIP FreeRTOS DHCP
-
-TODO

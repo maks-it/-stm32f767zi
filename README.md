@@ -12,10 +12,6 @@
 * [LWIP FreeRTOS Basic](./LWIP_FREERTOS/README.md)
 * [LWIP FreeRTOS HTTP Server Basic](./LWIP_FREERTOS_HTTP/README.md)
 
-**With DHCP**
-
-* [LWIP FreeRTOS DHCP](./LWIP_FREERTOS_DHCP/README.md)
-
 **✅ Important:**
 
 > These tutorials were created using the NUCLEO-F767ZI evaluation board, configured with a standalone RMII clock for Ethernet functionality.
